@@ -1,7 +1,7 @@
   var db = null;
-  const DB_NAME = 'mdn-demo-indexeddb-enoticias4';
+  const DB_NAME = 'mdn-demo-indexeddb-enoticias8';
   const DB_VERSION = 1; 
-  const DB_STORE_NAME = 'noticias4';
+  const DB_STORE_NAME = 'noticias8';
  
   var current_view_pub_key; 
 
@@ -27,6 +27,7 @@ var functions = {
       store.createIndex('id', 'id', { unique: true});
       store.createIndex('description', 'description', { unique: false });
       store.createIndex('value', 'value', { unique: false });
+      store.createIndex('bairro', 'bairro', { unique: false });      
     };
   },
 
@@ -74,7 +75,7 @@ var functions = {
         req.onsuccess = function (evt) {
           var value = evt.target.result;
         };
-        listar.carregarValoresParaLista(cursor.value.id, cursor.value.description, cursor.value.value);
+        listar.carregarValoresParaLista(cursor.value.id, cursor.value.description, cursor.value.value, cursor.value.bairro);
         cursor.continue();
 
        
@@ -150,9 +151,9 @@ var functions = {
     };
   },  
 
-  addPublication: function(id, description, value) {
+  addPublication: function(id, description, value, bairro) {
       console.log("addPublication arguments:", arguments);
-      var obj = { id: id, description: description, value: value };
+      var obj = { id: id, description: description, value: value, bairro: bairro };
 
       var store = functions.getObjectStore(DB_STORE_NAME, 'readwrite');
       var req;
